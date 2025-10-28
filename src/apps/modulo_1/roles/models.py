@@ -46,7 +46,6 @@ class Estudiante(models.Model):
         ('OT', 'Otro'),
     ]
 
-
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     nivel_estudios = models.CharField(choices=grado)
     institucion_actual = models.CharField(max_length=255)
