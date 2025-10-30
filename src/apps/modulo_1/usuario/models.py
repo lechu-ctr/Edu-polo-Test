@@ -10,7 +10,7 @@ class Persona(models.Model):
         ('P', 'Prefiero no decirlo'),
     ]
 
-    dni = models.CharField(max_length=20, unique=True)
+    dni = models.CharField(max_length=12, unique=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     correo = models.EmailField(unique=True)

@@ -5,12 +5,13 @@ from django.dispatch import receiver
 
 @receiver(post_migrate)
 def crear_roles_y_permisos(sender, **kwargs):
+    #Preparado, falta tener el resto de tablas funcionales para agregar los permisos
     roles = {
         "Administrador": [],
-        "Coordinador": ["add_curso", "change_curso", "view_curso"],
-        "MesaEntrada": ["view_curso", "change_asistencia", "view_estudiante"],
-        "Docente": ["view_estudiante", "view_curso"],
-        "Estudiante": ["view_curso"],
+        "Coordinador": [],
+        "MesaEntrada": [],
+        "Docente": [],
+        "Estudiante": [],
         "PuntoMedio": [],
     }
 

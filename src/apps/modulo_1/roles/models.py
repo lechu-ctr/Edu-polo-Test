@@ -12,7 +12,7 @@ class Rol(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=models.Q(jerarquia__gte=1) & models.Q(jerarquia_lte=5),
+                check=models.Q(jerarquia__gte=1) & models.Q(jerarquia__lte=5),
                 name="rol_jerarquia_entre_1_y_5"
             )
         ]
