@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class SeguimientoConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'seguimiento'
+    name = 'apps.modulo_4.seguimiento'

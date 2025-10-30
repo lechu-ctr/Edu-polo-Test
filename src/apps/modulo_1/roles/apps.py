@@ -6,4 +6,4 @@ class RolesConfig(AppConfig):
     name = 'apps.modulo_1.roles'
 
     def ready(self):
-        import modulo_1.roles.signals
+        import apps.modulo_1.roles.signals
