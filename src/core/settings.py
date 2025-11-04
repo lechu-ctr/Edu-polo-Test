@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'apps.modulo_4.asistencia',
     'apps.modulo_4.certificado',
     'apps.modulo_4.seguimiento',
-    'apps.modulo_5.estadistica',
     'apps.modulo_5.reporte',
     'apps.modulo_6.administracion',
     'apps.modulo_6.seguridad',
