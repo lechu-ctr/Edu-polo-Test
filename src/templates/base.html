@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título de la pestaña (puede ser sobreescrito por otras plantillas) -->
+    <title>{% block title %}EduPolo - Polo Creativo{% endblock %}</title>
+
+    <!-- Tailwind CSS (CDN para que funcione rápido) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- 
+      ==============================================
+      ¡AQUÍ CARGAMOS TUS ARCHIVOS CSS!
+      (Desde la carpeta src/static/css/...)
+      ==============================================
+    -->
+    <!-- 1. Paleta de Colores (Definida por ti) -->
+    <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+    
+    <!-- 2. Estilos Generales del Sitio -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    
+    <!-- Espacio para estilos extra de cada página -->
+    {% block extra_head %}{% endblock %}
+
+    <style>
+        /* Aplicamos estilos base usando tus variables de color */
+        body {
+            background-color: var(--color-base-fondo);
+            color: var(--color-base-texto);
+            font-family: 'Inter', sans-serif; /* (Tipografía de tu PDF) */
+        }
+        nav a:hover,
+        .dropdown-button:hover {
+            color: var(--color-primario);
+        }
+        
+        /* Estilos para el menú desplegable (dropdown) */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ======================= -->
+    <!--  Barra de Navegación    -->
+    <!-- ======================= -->
+    <nav class="bg-white shadow-md" style="background-color: var(--color-base-blanco);">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- Logo / Marca -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold" style="color: var(--color-primario);">
+                        POLO CREATIVO
+                    </a>
+                </div>
+
+                <!-- Enlaces de Módulos (Menú del Administrador) -->
+                <!-- 
+                    Estos enlaces asumen los 'app_name' de tus compañeros:
+                    'usuarios', 'inscripciones', 'asistencia', 'reportes'
+                -->
+                <div class="hidden md:flex items-center space-x-4">
+                    
+                    <!-- Módulo 1 (Diego) -->
+                    <a href="{% url 'usuarios:usuario_list' %}" class="text-gray-600 font-medium px-3 py-2 rounded-md hover:text-gray-900">Usuarios</a> 
+                    
+                    <!-- Módulo 2 (Tadeo) -->
+                    <a href="#" class="text-gray-600 font-medium px-3 py-2 rounded-md hover:text-gray-900">Inscripciones</a>
+                    
+                    <!-- Módulo 3 (Tú) -->
+                    <div class="relative dropdown">
+                        <button class="dropdown-button text-gray-600 font-medium px-3 py-2 rounded-md hover:text-gray-900 focus:outline-none">
+                            Gestión (Módulo 3) &darr;
+                        </button>
+                        <!-- Menú desplegable para tu módulo -->
+                        <div class="dropdown-menu absolute z-10 hidden bg-white shadow-lg rounded-md mt-2 w-48">
+                            <a href="{% url 'cursos:curso_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cursos</a>
+                            <a href="{% url 'cursos:comision_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Comisiones</a>
+                            <a href="{% url 'docentes:docente_list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Docentes</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Módulo 4 (Geremías) -->
+                    <a href="#" class="text-gray-600 font-medium px-3 py-2 rounded-md hover:text-gray-900">Asistencia</a>
+                    
+                    <!-- Módulo 5 (Damaris) -->
+                    <a href="#" class="text-gray-600 font-medium px-3 py-2 rounded-md hover:text-gray-900">Reportes</a>
+                </div>
+
+                <!-- Perfil / Salir -->
+                <div class="hidden md:flex items-center">
+                    {% if user.is_authenticated %}
+                        <span class="text-sm text-gray-700 mr-4">Hola, {{ user.get_full_name|default:user.username }}</span>
+                        <!-- Asumimos que la URL de logout está en la app 'usuarios' -->
+                        <a href="{% url 'usuarios:logout' %}" class="text-sm font-medium" style="color: var(--color-acento);">Salir</a>
+                    {% else %}
+                        <!-- Asumimos que la URL de login está en la app 'usuarios' -->
+                        <a href="{% url 'usuarios:login' %}" class="text-sm font-medium" style="color: var(--color-primario);">Ingresar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================= -->
+    <!--   Contenido Principal   -->
+    <!-- ======================= -->
+    <main class="flex-grow">
+        <!-- Contenedor principal con padding -->
+        <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+            
+            <!-- Aquí se mostrarán los mensajes de éxito/error -->
+            <!-- (Asegúrate de tener 'src/templates/includes/mensajes.html') -->
+            {% include 'includes/mensajes.html' %}
+            
+            <!-- 
+              =========================================================
+              AQUÍ ES DONDE CADA PÁGINA "HIJA" INYECTARÁ SU CONTENIDO
+              =========================================================
+            -->
+            {% block content %}
+                <!-- El contenido de lista.html, crear.html, etc., irá aquí -->
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- ======================= -->
+    <!--      Pie de Página      -->
+    <!-- ======================= -->
+    <footer class="w-full mt-12 py-6 text-center" style="background-color: var(--color-base-blanco); border-top: 1px solid var(--color-base-bordes);">
+        <p class="text-sm" style="color: var(--color-base-texto-claro);">
+            © {% now "Y" %} Polo Creativo Ushuaia. Todos los derechos reservados.
+        </p>
+    </footer>
+    
+    <!-- Espacio para scripts extra de cada página -->
+    {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

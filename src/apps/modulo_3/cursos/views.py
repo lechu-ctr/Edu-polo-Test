@@ -9,7 +9,8 @@ from .models import Curso, Comision, Material, ComisionDocente
 from .forms import CursoForm, ComisionForm, MaterialForm, ImportarCursosForm, AsignacionDocenteForm
 
 # Importamos los modelos de la app de usuarios
-from gestion_usuarios.models import Usuario, Rol
+from apps.modulo_1.usuario.models import Usuario
+from apps.modulo_1.roles.models import Rol
 
 # --- CRUD para Cursos ---
 
