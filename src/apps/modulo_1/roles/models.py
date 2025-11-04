@@ -1,13 +1,13 @@
 from django.db import models
 from apps.modulo_1.usuario.models import Usuario, Persona
-
+from django.contrib.auth.models import Group
 
 # Create your models here.
 class Rol(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     descripcion = models.CharField(max_length=255)
     jerarquia = models.PositiveSmallIntegerField()
-
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         constraints = [
@@ -18,25 +18,27 @@ class Rol(models.Model):
         ]
         verbose_name = "Rol"
         verbose_name_plural = "Roles"
-   
-    def __str__(self):
-        return f"{self.nombre} - Jerarquia({self.jerarquia})"
 
+    def save(self, *args, **kwargs):
+        if not self.group:
+            grupo, _ = Group.objects.get_or_create(name=self.nombre)
+            self.group = grupo
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.nombre} - Jerarquía({self.jerarquia})"
 
 class Docente(models.Model):
     especialidad = models.CharField(max_length=100)
     experiencia = models.TextField()
     id_persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
-
     class Meta:
         verbose_name = "Docente"
         verbose_name_plural = "Docentes"
 
-
     def __str__(self):
         return f"{self.id_persona.nombre} - Especialidad {self.especialidad}"
-
 
 class Estudiante(models.Model):
     grado = [
@@ -51,15 +53,12 @@ class Estudiante(models.Model):
     institucion_actual = models.CharField(max_length=255)
     experiencia_laboral = models.TextField(blank=True, null=True)
 
-
     class Meta:
         verbose_name = "Estudiante"
         verbose_name_plural = "Estudiantes"
 
-
     def __str__(self):
         return f"Estudiante: {self.usuario.persona.nombre} {self.usuario.persona.apellido}"
-
 
 class Tutor(models.Model):
     tipo = [
@@ -69,21 +68,17 @@ class Tutor(models.Model):
         ('OT', 'Otro'),
     ]
 
-
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     tipo_tutor = models.CharField(choices=tipo)
     telefono_contacto = models.CharField(max_length=15)
     disponibilidad_horaria = models.CharField(max_length=100)
 
-
     class Meta:
         verbose_name = "Tutor"
         verbose_name_plural = "Tutores"
 
-
     def __str__(self):
         return f"Tutor: {self.usuario.persona.nombre} {self.usuario.persona.apellido}"
-
 
 class TutorEstudiante(models.Model):
     tutor = models.ForeignKey(Tutor, on_delete=models.CASCADE)
@@ -91,15 +86,22 @@ class TutorEstudiante(models.Model):
     fecha_asignacion = models.DateField(auto_now_add=True)
     observacion = models.TextField(null=True)
 
-
     def __str__(self):
         return f"Tutor: {self.tutor.usuario.persona.nombre} - Estudiante: {self.estudiante.usuario.persona.nombre}"
-
+    
+    class Meta:
+        verbose_name = "Tutor/Estudiante"
+        verbose_name_plural = "Tutor/Estudiante"
+        unique_together = ('tutor', 'estudiante')
 
 class UsuarioRol(models.Model):
-    usuario_id = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    rol_id = models.ForeignKey(Rol, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Usuario/Rol"
+        verbose_name_plural = "Usuarios/Roles"
+        unique_together = ('usuario', 'rol')
 
     def __str__(self):
-        return f"Usuario {self.usuario_id} - Rol {self.rol.nombre}"
+        return f"{self.usuario.persona.nombre} → {self.rol.nombre}"

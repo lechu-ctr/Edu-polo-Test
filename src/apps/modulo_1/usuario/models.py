@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Persona(models.Model):
@@ -37,16 +38,18 @@ class Persona(models.Model):
         return ''.join(ch for ch in dni_raw if ch.isdigit())
 
 class Usuario(models.Model):
-    contrasena = models.CharField(max_length=128)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    contraseña = models.CharField(null=True, blank=True)
     permiso_imagen = models.BooleanField(default=False)
     permiso_voz = models.BooleanField(default=False)
-    activo = models.BooleanField(default=True)
-    creado = models.DateTimeField(auto_now_add=True)
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
 
     def __str__(self):
-        return self.nombre
+        return f"{self.persona.nombre}"
+
+    def tiene_rol(self, nombre_rol):
+        return self.roles.filter(nombre=nombre_rol).exists()

@@ -1,5 +1,6 @@
 from django.db import models
-from gestion_usuarios.models import Usuario
+from apps.modulo_1.usuario.models import Usuario
+
 
 class Curso(models.Model):
     OPCIONES_ESTADO_CURSO = [
