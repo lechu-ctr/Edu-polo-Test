@@ -86,3 +86,10 @@ def reporte_egresos(request):
         'cursos': cursos,
         'curso_filtrado': curso_filtrado
     })
+    from django.shortcuts import render
+
+def reporte_inscritos(request):
+    # Ejemplo simple
+    return render(request, 'reporte/inscritos.html')
+
+
