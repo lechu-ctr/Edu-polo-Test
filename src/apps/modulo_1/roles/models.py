@@ -4,9 +4,17 @@ from django.contrib.auth.models import Group
 
 # Create your models here.
 class Rol(models.Model):
+    jerarquias = [
+        (1, "Administrador"),
+        (2, "Coordinador"),
+        (3, "Mesa de Entrada"),
+        (4, "Docente"),
+        (5, "Estudiante"),
+    ]
+
     nombre = models.CharField(max_length=50, unique=True)
     descripcion = models.CharField(max_length=255)
-    jerarquia = models.PositiveSmallIntegerField()
+    jerarquia = models.PositiveSmallIntegerField(choices=jerarquias)
     group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
@@ -26,8 +34,8 @@ class Rol(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.nombre} - Jerarquía({self.jerarquia})"
-
+        return f"{self.nombre} (Jerarquía {self.jerarquia})"
+        
 class Docente(models.Model):
     especialidad = models.CharField(max_length=100)
     experiencia = models.TextField()
@@ -48,10 +56,17 @@ class Estudiante(models.Model):
         ('OT', 'Otro'),
     ]
 
+    ciudad_residencia = [
+        ('USH', 'Ushuaia'),
+        ('RGA', 'Río Grande'),
+        ('TLH', 'Tolhuin'),
+    ]
+
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     nivel_estudios = models.CharField(choices=grado)
     institucion_actual = models.CharField(max_length=255)
     experiencia_laboral = models.TextField(blank=True, null=True)
+    ciudad_residencia = models.CharField(choices=ciudad_residencia)
 
     class Meta:
         verbose_name = "Estudiante"
@@ -95,7 +110,7 @@ class TutorEstudiante(models.Model):
         unique_together = ('tutor', 'estudiante')
 
 class UsuarioRol(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name="roles")
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
 
     class Meta:
@@ -105,3 +120,13 @@ class UsuarioRol(models.Model):
 
     def __str__(self):
         return f"{self.usuario.persona.nombre} → {self.rol.nombre}"
+
+    @staticmethod
+    def asignar_rol(usuario, nuevo_rol):
+        """Elimina roles anteriores y asigna el nuevo (como define el sistema del Polo)."""
+        UsuarioRol.objects.filter(usuario=usuario).delete()
+        UsuarioRol.objects.create(usuario=usuario, rol=nuevo_rol)
+        # Vincular también con el grupo de Django
+        usuario.user.groups.clear()
+        if nuevo_rol.group:
+            usuario.user.groups.add(nuevo_rol.group)
