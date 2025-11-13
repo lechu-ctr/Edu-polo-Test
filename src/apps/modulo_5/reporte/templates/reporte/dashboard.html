@@ -1,0 +1,22 @@
+<!-- templates/reportes/dashboard.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard de Reportes</h1>
+
+<nav>
+  <ul>
+    <li><a href="{% url 'reportes:estudiantes' %}">Estudiantes</a></li>
+    <li><a href="{% url 'reportes:asistencia' %}">Asistencia</a></li>
+    <li><a href="{% url 'reportes:inscritos_curso' %}">Inscritos por Curso</a></li>
+    <!-- más pestañas -->
+  </ul>
+</nav>
+
+<section>
+  <div>Total Estudiantes: {{ total_estudiantes }}</div>
+  <div>Total Inscripciones: {{ total_inscritos }}</div>
+  <div>Total Asistencias: {{ total_asistencias }}</div>
+</section>
+
+{% endblock %}

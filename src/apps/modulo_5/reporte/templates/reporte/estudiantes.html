@@ -1,0 +1,46 @@
+<!-- templates/reportes/asistencia.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Reporte de Asistencia</h1>
+
+<form method="get">
+  <label for="curso">Curso:</label>
+  <select name="curso" id="curso">
+    <option value="">Todos los cursos</option>
+    {% for c in cursos %}
+      <option value="{{ c.id }}" {% if request.GET.curso == c.id|stringformat:"s" %}selected{% endif %}>
+         {{ c.nombre }}
+      </option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
+  <a href="?{% if request.GET %}{{ request.GET.urlencode }}&{% endif %}export=excel">Exportar a Excel</a>
+
+
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Curso</th>
+      <th>Comisión</th>
+      <th>Total Clases</th>
+      <th>Total Asistencias</th>
+      <th>% Asistencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in asistencias %}
+    <tr>
+      <td>{{ a.inscripcion.curso.nombre }}</td>
+      <td>{{ a.inscripcion.comision }}</td>
+      <td>{{ a.inscripcion.curso.total_clases }}</td>
+      <td>{{ a.contador_asistencias }}</td>
+      <td>{{ a.contador_asistencias|floatformat:2 }}/{{ a.inscripcion.curso.total_clases }} | {{ a.contador_asistencias|divisibleby:a.inscripcion.curso.total_clases|floatformat:2 }}%</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
