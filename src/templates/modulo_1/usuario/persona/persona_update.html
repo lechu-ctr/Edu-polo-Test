@@ -1,0 +1,12 @@
+{% extends 'modulo_1/usuario/base.html' %}
+{% block title %}Editar Persona{% endblock %}
+{% block header %}Editar Persona{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Actualizar</button>
+    <a href="{% url 'usuario:persona_list' %}">Cancelar</a>
+</form>
+{% endblock %}

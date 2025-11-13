@@ -123,10 +123,8 @@ class UsuarioRol(models.Model):
 
     @staticmethod
     def asignar_rol(usuario, nuevo_rol):
-        """Elimina roles anteriores y asigna el nuevo (como define el sistema del Polo)."""
         UsuarioRol.objects.filter(usuario=usuario).delete()
         UsuarioRol.objects.create(usuario=usuario, rol=nuevo_rol)
-        # Vincular también con el grupo de Django
         usuario.user.groups.clear()
         if nuevo_rol.group:
             usuario.user.groups.add(nuevo_rol.group)

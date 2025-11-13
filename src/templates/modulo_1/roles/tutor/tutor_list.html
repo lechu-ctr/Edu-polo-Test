@@ -1,0 +1,26 @@
+{% extends 'modulo_1/roles/base.html' %}
+{% block title %}Listado de Tutores{% endblock %}
+{% block header %}Tutores Registrados{% endblock %}
+
+{% block content %}
+<a href="{% url 'tutor_create' %}">Nuevo Tutor</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for tutor in object_list %}
+    <tr>
+        <td>{{ tutor.id }}</td>
+        <td>{{ tutor }}</td>
+        <td>
+            <a href="{% url 'roles:tutor_update' tutor.id %}">Editar</a> |
+            <a href="{% url 'roles:tutor_delete' tutor.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No hay tutores registrados.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

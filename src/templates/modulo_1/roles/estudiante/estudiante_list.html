@@ -1,0 +1,26 @@
+{% extends 'modulo_1/roles/base.html' %}
+{% block title %}Listado de Estudiantes{% endblock %}
+{% block header %}Estudiantes Registrados{% endblock %}
+
+{% block content %}
+<a href="{% url 'roles:estudiante_create' %}">Nuevo Estudiante</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for estudiante in object_list %}
+    <tr>
+        <td>{{ estudiante.id }}</td>
+        <td>{{ estudiante }}</td>
+        <td>
+            <a href="{% url 'roles:estudiante_update' estudiante.id %}">Editar</a> |
+            <a href="{% url 'roles:estudiante_delete' estudiante.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No hay estudiantes registrados.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

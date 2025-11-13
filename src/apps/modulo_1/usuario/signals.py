@@ -9,7 +9,7 @@ def crear_user(sender, instance, created, **kwargs):
         user = User.objects.create_user(
             username=instance.persona.dni,
             email=instance.persona.correo,
-            password=instance.contraseña or "changeme123"
+            password=instance.contraseña,
         )
         instance.user = user
         instance.save()

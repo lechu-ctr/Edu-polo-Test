@@ -1,0 +1,12 @@
+{% extends 'modulo_1/usuario/base.html' %}
+{% block title %}Eliminar Usuario{% endblock %}
+{% block header %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<p>¿Seguro que deseas eliminar al usuario "{{ object }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+    <a href="{% url 'usuario:usuario_list' %}">Cancelar</a>
+</form>
+{% endblock %}

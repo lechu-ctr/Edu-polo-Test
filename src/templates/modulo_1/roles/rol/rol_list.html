@@ -1,0 +1,26 @@
+{% extends 'modulo_1/roles/base.html' %}
+{% block title %}Listado de Roles{% endblock %}
+{% block header %}Roles Registrados{% endblock %}
+
+{% block content %}
+<a href="{% url 'roles:rol_create' %}">Nuevo Rol</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for rol in object_list %}
+    <tr>
+        <td>{{ rol.id }}</td>
+        <td>{{ rol.nombre }}</td>
+        <td>
+            <a href="{% url 'roles:rol_update' rol.id %}">Editar</a> |
+            <a href="{% url 'roles:rol_delete' rol.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No hay roles registrados.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

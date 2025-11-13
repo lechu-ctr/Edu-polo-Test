@@ -1,0 +1,12 @@
+{% extends 'modulo_1/usuario/base.html' %}
+{% block title %}Crear Persona{% endblock %}
+{% block header %}Nueva Persona{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'usuario:persona_list' %}">Cancelar</a>
+</form>
+{% endblock %}

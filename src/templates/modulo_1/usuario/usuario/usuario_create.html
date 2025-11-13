@@ -1,0 +1,12 @@
+{% extends 'modulo_1/usuario/base.html' %}
+{% block title %}Crear Usuario{% endblock %}
+{% block header %}Nuevo Usuario{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'usuario:usuario_list' %}">Cancelar</a>
+</form>
+{% endblock %}

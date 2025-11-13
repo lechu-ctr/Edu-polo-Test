@@ -4,8 +4,6 @@ from django.dispatch import receiver
 
 @receiver(post_migrate)
 def crear_roles_y_permisos(sender, **kwargs):
-    if sender.name != "apps.roles":
-        return
     roles = {
         "Administrador": ["add_user", "change_user", "delete_user", "view_user"],
         "Coordinador": ["view_user", "change_user"],

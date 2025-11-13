@@ -7,89 +7,89 @@ from .models import *
 #Rol
 class RolListView(ListView):
     model = Rol
-    template_name = 'roles/rol_list.html'
+    template_name = 'modulo_1/roles/rol/rol_list.html'
 
 class RolCreateView(CreateView):
     model = Rol
-    template_name = 'roles/rol_form.html'
+    template_name = 'modulo_1/roles/rol/rol_create.html'
     fields = '__all__'
     success_url = reverse_lazy('rol_list')
 
 class RolUpdateView(UpdateView):
     model = Rol
-    template_name = 'roles/rol_form.html'
+    template_name = 'modulo_1/roles/rol/rol_update.html'
     fields = '__all__'
     success_url = reverse_lazy('rol_list')
 
 class RolDeleteView(DeleteView):
     model = Rol
-    template_name = 'roles/rol_confirm_delete.html'
+    template_name = 'modulo_1/roles/rol/rol_delete.html'
     success_url = reverse_lazy('rol_list')
 
 #Docente
 class DocenteListView(ListView):
     model = Docente
-    template_name = 'roles/docente_list.html'
+    template_name = 'modulo_1/roles/docente/docente_list.html'
 
 class DocenteCreateView(CreateView):
     model = Docente
-    template_name = 'roles/docente_form.html'
+    template_name = 'modulo_1/roles/docente/docente_create.html'
     fields = '__all__'
     success_url = reverse_lazy('docente_list')
 
 class DocenteUpdateView(UpdateView):
     model = Docente
-    template_name = 'roles/docente_form.html'
+    template_name = 'modulo_1/roles/docente/docente_update.html'
     fields = '__all__'
     success_url = reverse_lazy('docente_list')
 
 class DocenteDeleteView(DeleteView):
     model = Docente
-    template_name = 'roles/docente_confirm_delete.html'
+    template_name = 'modulo_1/roles/docente/docente_delete.html'
     success_url = reverse_lazy('docente_list')
 
 #Estudiante
 class EstudianteListView(ListView):
     model = Estudiante
-    template_name = 'roles/estudiante_list.html'
+    template_name = 'modulo_1/roles/estudiante/estudiante_list.html'
 
 class EstudianteCreateView(CreateView):
     model = Estudiante
-    template_name = 'roles/estudiante_form.html'
+    template_name = 'modulo_1/roles/estudiante/estudiante_create.html'
     fields = '__all__'
     success_url = reverse_lazy('estudiante_list')
 
 class EstudianteUpdateView(UpdateView):
     model = Estudiante
-    template_name = 'roles/estudiante_form.html'
+    template_name = 'modulo_1/roles/estudiante/estudiante_update.html'
     fields = '__all__'
     success_url = reverse_lazy('estudiante_list')
 
 class EstudianteDeleteView(DeleteView):
     model = Estudiante
-    template_name = 'roles/estudiante_confirm_delete.html'
+    template_name = 'modulo_1/roles/estudiante/estudiante_delete.html'
     success_url = reverse_lazy('estudiante_list')
 
 #Tutor
 class TutorListView(ListView):
     model = Tutor
-    template_name = 'roles/tutor_list.html'
+    template_name = 'modulo_1/roles/tutor/tutor_list.html'
 
 class TutorCreateView(CreateView):
     model = Tutor
-    template_name = 'roles/tutor_form.html'
+    template_name = 'modulo_1/roles/tutor/tutor_create.html'
     fields = '__all__'
     success_url = reverse_lazy('tutor_list')
 
 class TutorUpdateView(UpdateView):
     model = Tutor
-    template_name = 'roles/tutor_form.html'
+    template_name = 'modulo_1/roles/tutor/tutor_update.html'
     fields = '__all__'
     success_url = reverse_lazy('tutor_list')
 
 class TutorDeleteView(DeleteView):
     model = Tutor
-    template_name = 'roles/tutor_confirm_delete.html'
+    template_name = 'modulo_1/roles/tutor/tutor_delete.html'
     success_url = reverse_lazy('tutor_list')
 
 #TutorEstudiante
@@ -99,19 +99,19 @@ class TutorEstudianteListView(ListView):
 
 class TutorEstudianteCreateView(CreateView):
     model = TutorEstudiante
-    template_name = 'roles/tutorestudiante_form.html'
+    template_name = 'roles/tutorestudiante_create.html'
     fields = '__all__'
     success_url = reverse_lazy('tutorestudiante_list')
 
 class TutorEstudianteUpdateView(UpdateView):
     model = TutorEstudiante
-    template_name = 'roles/tutorestudiante_form.html'
+    template_name = 'roles/tutorestudiante_update.html'
     fields = '__all__'
     success_url = reverse_lazy('tutorestudiante_list')
 
 class TutorEstudianteDeleteView(DeleteView):
     model = TutorEstudiante
-    template_name = 'roles/tutorestudiante_confirm_delete.html'
+    template_name = 'roles/tutorestudiante_delete.html'
     success_url = reverse_lazy('tutorestudiante_list')
 
 #UsuarioRol (Posiblemente innecesario)
@@ -121,17 +121,17 @@ class UsuarioRolListView(ListView):
 
 class UsuarioRolCreateView(CreateView):
     model = UsuarioRol
-    template_name = 'roles/usuariorol_form.html'
+    template_name = 'roles/usuariorol_create.html'
     fields = '__all__'
     success_url = reverse_lazy('usuariorol_list')
 
 class UsuarioRolUpdateView(UpdateView):
     model = UsuarioRol
-    template_name = 'roles/usuariorol_form.html'
+    template_name = 'roles/usuariorol_update.html'
     fields = '__all__'
     success_url = reverse_lazy('usuariorol_list')
 
 class UsuarioRolDeleteView(DeleteView):
     model = UsuarioRol
-    template_name = 'roles/usuariorol_confirm_delete.html'
+    template_name = 'roles/usuariorol_delete.html'
     success_url = reverse_lazy('usuariorol_list')

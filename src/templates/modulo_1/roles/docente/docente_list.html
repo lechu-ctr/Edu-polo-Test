@@ -1,0 +1,26 @@
+{% extends 'modulo_1/roles/base.html' %}
+{% block title %}Listado de Docentes{% endblock %}
+{% block header %}Docentes Registrados{% endblock %}
+
+{% block content %}
+<a href="{% url 'roles:docente_create' %}">Nuevo Docente</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+    </tr>
+    {% for docente in object_list %}
+    <tr>
+        <td>{{ docente.id }}</td>
+        <td>{{ docente }}</td>
+        <td>
+            <a href="{% url 'roles:docente_update' docente.id %}">Editar</a> |
+            <a href="{% url 'roles:docente_delete' docente.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No hay docentes registrados.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

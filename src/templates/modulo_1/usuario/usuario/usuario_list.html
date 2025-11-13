@@ -1,0 +1,28 @@
+{% extends 'modulo_1/usuario/base.html' %}
+{% block title %}Listado de Usuarios{% endblock %}
+{% block header %}Usuarios Registrados{% endblock %}
+
+{% block content %}
+<a href="{% url 'usuario:usuario_create' %}">Nuevo Usuario</a>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>ID</th>
+        <th>Correo</th>
+        <th>Persona</th>
+        <th>Acciones</th>
+    </tr>
+    {% for usuario in object_list %}
+    <tr>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.persona }}</td>
+        <td>
+            <a href="{% url 'usuario:usuario_update' usuario.id %}">Editar</a> |
+            <a href="{% url 'usuario:usuario_delete' usuario.id %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No hay usuarios registrados.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
